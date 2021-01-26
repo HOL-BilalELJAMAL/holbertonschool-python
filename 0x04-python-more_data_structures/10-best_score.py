@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 def best_score(a_dictionary):
-    if type(a_dictionary) != dict:
+    if type(a_dictionary) != dict or not a_dictionary:
         return None
     list_keys = list(a_dictionary.keys())
     list_values = list(a_dictionary.values())
