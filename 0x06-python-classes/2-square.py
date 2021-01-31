@@ -10,7 +10,6 @@ class Square:
     Represents a class called Square with a private instance
     attribute called size
     """
-
     def __init__(self, size=0):
         """
         Initialization of the private instance attribute called size
