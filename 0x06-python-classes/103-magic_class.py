@@ -16,10 +16,12 @@ class MagicClass:
     def __init__(self, radius=0):
         """
         Initialization of the private instance attribute called radius
+        
         Args:
             radius (int, float): radius of the Circle
+        
         Note:
-            If value is not an integer and not float, a TypeError exception
+            If radius is not an integer and not float, a TypeError exception
             is raised
             Otherwise, Successful Initialization
         """
