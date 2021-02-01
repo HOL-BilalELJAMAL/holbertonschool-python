@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
     1-square.py
-    Module that defines a Square and return empty dictionary
+    Module that defines a Square and return square size
 """
 
 
