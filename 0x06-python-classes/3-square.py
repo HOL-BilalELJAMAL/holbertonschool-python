@@ -13,8 +13,10 @@ class Square:
     def __init__(self, size=0):
         """
         Initialization of the private instance attribute called size
+
         Args:
             size (int): Size of the Square
+
         Note:
             If size is not an integer, a TypeError exception is raised
             Else If size is negative, a ValueError exception is raised
