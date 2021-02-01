@@ -2,6 +2,7 @@
 """
     3-square.py
     Module that defines a Square and return square size
+    Including Method to calculate the Square's area
 """
 
 
