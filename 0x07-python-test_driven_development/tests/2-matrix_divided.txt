@@ -61,7 +61,7 @@ Test divide matrix whose rows are not all lists by 2
 Traceback (most recent call last):
 TypeError: matrix must be a matrix (list of lists) of integers/floats
 
-Test divide matrix whose at least one element is not integer of float by 2
+Test divide matrix whose at least one element is not integer or float by 2
 >>> matrix_divided([[1, 2, 3, 4], [1, 2, 3, "Holberton"]], 2)
 Traceback (most recent call last):
 TypeError: matrix must be a matrix (list of lists) of integers/floats
