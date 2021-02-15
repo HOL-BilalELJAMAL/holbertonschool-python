@@ -17,7 +17,8 @@ class Rectangle(BaseGeometry):
     def __init__(self, width, height):
         """
         Initialization of the private instance attributes
-        Width and Height  will be validated using the integer_validator base method
+        Width and Height  will be validated using the integer_validator
+        implemented in the base class
         """
         self.integer_validator("width", width)
         self.integer_validator("height", height)
