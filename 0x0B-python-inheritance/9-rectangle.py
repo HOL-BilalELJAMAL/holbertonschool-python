@@ -3,7 +3,7 @@
     9-rectangle.py
     Module that defines a class called Rectangle that inherits from
     class BaseGeometry and returns its width and height
-    Include a method to calculate the Rectangle's area
+    Including a method to calculate the Rectangle's area
     Including __str__ method to represent the Rectangle
 """
 
