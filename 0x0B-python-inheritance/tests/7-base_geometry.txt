@@ -7,10 +7,12 @@ Using ``base_geometry``
 Import file
 >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
-Create object instance of class BaseGeometry
->>> bg = BaseGeometry()
 Test integer_validator for positive integer as value
+>>> bg = BaseGeometry()
 >>> bg.integer_validator("age", 12)
+
+Test integer validator for name as empty string
+>>> bg.integer_validator("", 12)
 
 Test integer_validator for value as string
 >>> bg.integer_validator("age", "Bill Gates")
