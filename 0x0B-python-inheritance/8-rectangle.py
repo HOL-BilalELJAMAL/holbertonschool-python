@@ -12,11 +12,13 @@ class Rectangle(BaseGeometry):
     """
     Represents a class called Rectangle with a private instance
     attributes called width and height
-    Width and Height values will be validated using the integer_validator
-    function implemented in the base class
     """
 
     def __init__(self, width, height):
+        """
+        Initialization of the private instance attributes
+        Width and Height  will be validated using the integer_validator base method
+        """
         self.integer_validator("width", width)
         self.integer_validator("height", height)
         self.__width = width
