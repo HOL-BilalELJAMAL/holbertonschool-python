@@ -3,7 +3,7 @@
     10-square.py
     Module that defines a class called Square that inherits from
     class Rectangle and returns its size
-    Include a method to calculate the Square's area
+    Including a method to calculate the Square's area
 """
 
 Rectangle = __import__('9-rectangle').Rectangle
