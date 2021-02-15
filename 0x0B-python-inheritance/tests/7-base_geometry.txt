@@ -9,7 +9,6 @@ Import file
 
 Create object instance of class BaseGeometry
 >>> bg = BaseGeometry()
-
 Test integer_validator for positive integer as value
 >>> bg.integer_validator("age", 12)
 
