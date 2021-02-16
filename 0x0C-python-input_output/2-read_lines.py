@@ -11,8 +11,8 @@ def read_lines(filename="", nb_lines=0):
     Function that prints n lines of a text file to stdout
 
     Args:
-        filename: File name
-        nb_lines: Number of lines
+        filename (file): File name
+        nb_lines (int): Number of lines
 
     Notes:
         if nb_lines <= 0 or nb_lines > file number of lines
