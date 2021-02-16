@@ -18,8 +18,6 @@ def write_file(filename="", text=""):
     Notes:
         If file does not exist, file should be created
         If file already exists, overwrite the content of the file
+    """
     with open(filename, 'w') as f:
         return f.write(text)
-    """
-    with open(filename, "w", encoding="utf-8") as writer:
-        return writer.write(text)
