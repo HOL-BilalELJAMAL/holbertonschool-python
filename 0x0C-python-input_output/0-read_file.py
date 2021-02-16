@@ -11,7 +11,7 @@ def read_file(filename=""):
     Function that reads a text file and prints it to stdout
 
     Args:
-        filename: File name
+        filename (file): File name
     """
     with open(filename) as f:
         for line in f:
