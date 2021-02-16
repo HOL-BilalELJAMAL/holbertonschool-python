@@ -16,7 +16,7 @@ def append_write(filename="", text=""):
         text (str): Text to be appended to the file
 
     Notes:
-        If file if does not exist, file should be created
+        If file does not exist, file should be created
         If file already exists, append text to the the end of the file
     """
     with open(filename, 'a') as f:
