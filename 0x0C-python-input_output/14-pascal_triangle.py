@@ -1,19 +1,31 @@
 #!/usr/bin/python3
-"""module"""
+"""
+    14-pascal_triangle.py
+    Module that defines a method called pascal_triangle that
+    returns a list of lists of integers representing the Pascals
+    triangle of height n
+"""
 
 
 def pascal_triangle(n):
-    """pascal's triangle"""
+    """
+    Function that returns a list of lists of integers representing the Pascals
+    triangle of height n
 
+    Args:
+        n (int): Pascal's triangle height
+
+    Note:
+        if n<=0, return empty list of list
+        Otherwise, return Pascal's triangle in list of list
+    """
     if n <= 0:
-        return []
-    a = []
-    for i in range(n):
-        a.append([])
-        a[i].append(1)
-        if i != 0:
-            for j in range(1, i):
-                a[i].append(a[i - 1][j - 1]+a[i - 1][j])
-            if n != 0:
-                a[i].append(1)
-    return a
+        return [[]]
+    triangle = []
+    prev_row = []
+    for i in range(0, n + 1):
+        cur_row = [0 < j < i - 1 and i > 2 and prev_row[j - 1] +
+                   prev_row[j] or 1 for j in range(0, i)]
+        prev_row = cur_row
+        triangle += [cur_row]
+    return triangle[1:]
