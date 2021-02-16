@@ -11,7 +11,7 @@ def number_of_lines(filename=""):
     Function that returns the number of lines of a text file
 
     Args:
-        filename: File name
+        filename (file): File name
     """
     nb_lines = 0
     with open(filename) as f:
