@@ -19,13 +19,11 @@ def pascal_triangle(n):
         if n<=0, return empty list of list
         Otherwise, return Pascal's triangle in list of list
     """
-    if n <= 0:
-        return [[]]
     triangle = []
-    prev_row = []
-    for i in range(0, n + 1):
-        cur_row = [0 < j < i - 1 and i > 2 and prev_row[j - 1] +
-                   prev_row[j] or 1 for j in range(0, i)]
-        prev_row = cur_row
-        triangle += [cur_row]
-    return triangle[1:]
+    for i in range(n):
+        row = [1]
+        if i > 0:
+            for j in range(i):
+                row.append(sum(triangle[-1][j:j + 2]))
+        triangle.append(row)
+    return triangle
