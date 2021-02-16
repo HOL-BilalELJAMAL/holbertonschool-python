@@ -12,8 +12,8 @@ def append_write(filename="", text=""):
     the number of characters added
 
     Args:
-        filename: File name
-        text: Text to be appended to the file
+        filename (file): File name
+        text (str): Text to be appended to the file
 
     Notes:
         If file if does not exist, file should be created
