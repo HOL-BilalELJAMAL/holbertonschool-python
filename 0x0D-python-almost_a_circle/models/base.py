@@ -108,8 +108,8 @@ class Base:
         if type(json_string) != str:
             raise TypeError("json_string must be a string")
         loads = json.loads(json_string)
-        for dict in loads:
-            if type(dict) != dict:
+        for d in loads:
+            if type(d) != dict:
                 raise ValueError("json_string must contain dictionaries")
         return loads
 
