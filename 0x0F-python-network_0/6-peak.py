@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 6-peak.py
 Module that defines a method called find_peak that finds a peak
@@ -17,7 +18,6 @@ def find_peak(list_of_integers):
         return None
     elif len(list_of_integers) == 1:
         return list_of_integers[0]
-
     n = len(list_of_integers) - 1
     idx = 0
     while n > idx:
