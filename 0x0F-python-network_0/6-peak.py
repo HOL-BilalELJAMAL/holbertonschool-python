@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """
 6-peak.py
 Module that defines a method called find_peak that finds a peak
@@ -13,16 +12,21 @@ def find_peak(list_of_integers):
 
     Args:
         list_of_integers (list): List of integers
-
-    Note:
-        if list_of_integers is not a list, return None
-        else, return peak integer of the list using recursion
     """
-    if not list_of_integers:
+    if len(list_of_integers) == 0:
         return None
-    if len(list_of_integers) == 1:
+    elif len(list_of_integers) == 1:
         return list_of_integers[0]
-    else:
-        peak = find_peak(list_of_integers[1:])
-        return peak if peak > list_of_integers[0] \
-            else list_of_integers[0]
+
+    n = len(list_of_integers) - 1
+    idx = 0
+    while n > idx:
+        mid = (n + idx) // 2
+        if list_of_integers[mid] <= list_of_integers[mid + 1]:
+            idx = mid + 1
+        elif list_of_integers[mid] <= list_of_integers[mid - 1]:
+            h = mid - 1
+        elif list_of_integers[mid] >= list_of_integers[mid + 1]\
+                and list_of_integers[mid] >= list_of_integers[mid - 1]:
+            return list_of_integers[mid]
+    return list_of_integers[idx]
