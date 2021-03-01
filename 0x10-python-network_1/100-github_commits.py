@@ -8,14 +8,17 @@ import requests
 from sys import argv
 
 if __name__ == "__main__":
-    github_commits = "https://api.github.com/repos/{}/{}/commits"
-    r = requests.get(github_commits.format(argv[2], argv[1]))
-    obj_json = r.json()
-    i = 1
-    for obj in obj_json:
-        if i <= 10:
+    github_commits = 'https://api.github.com/repos/'\
+                     + argv[2] + '/' + argv[1] + '/commits'
+    r = requests.get(github_commits)
+    if "json" not in r.headers.get('content-type'):
+        print("Not a valid JSON")
+    else:
+        res = r.json()
+        i = 0
+        for r in res:
+            if i > 9:
+                break
             print(r.get('sha') + ': ', end="")
             print(r.get('commit').get('author').get('name'))
-        else:
-            break
-        i += 1
+            i += 1
