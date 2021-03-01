@@ -48,7 +48,7 @@ if __name__ == "__main__":
     search_resp = requests.get(search_url, headers=search_headers,
                                params=search_params)
 
-    data = search_resp.json()
+    data = search_resp.json().get("statuses")
     for obj in data:
         print("[{}] {} by {}".format(obj.get('id'),
                                      obj.get('text'),
