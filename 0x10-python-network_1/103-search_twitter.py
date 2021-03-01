@@ -37,8 +37,7 @@ if __name__ == "__main__":
     }
 
     search_params = {
-        'q': search_str,
-        'count': 6
+        'q': search_str
     }
 
     search_url = '{}1.1/search/tweets.json'.format(base_url)
@@ -48,7 +47,14 @@ if __name__ == "__main__":
     data = search_resp.json().get('statuses')
 
     if data:
-        for obj in data:
-            print("[{}] {} by {}".format(obj.get('id'),
-                                         obj.get('text'),
-                                         obj.get('user').get('name')))
+        n = 0
+        for tweet in data:
+            if n == 5:
+                break
+            try:
+                print("[{}] {} by {}".format(tweet.get('id'),
+                                             tweet.get('text'),
+                                             tweet.get('user').get('name')))
+                n += 1
+            except:
+                pass
