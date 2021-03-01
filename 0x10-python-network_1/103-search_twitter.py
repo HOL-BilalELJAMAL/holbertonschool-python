@@ -48,8 +48,8 @@ if __name__ == "__main__":
     search_resp = requests.get(search_url, headers=search_headers,
                                params=search_params)
 
-    data = eval(search_resp.content)
-    data = data.get("statuses")
+    resp_content = eval(search_resp.content)
+    data = resp_content['statuses']
     for obj in data:
         print("[{}] {} by {}".format(obj.get('id'),
                                      obj.get('text'),
