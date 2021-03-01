@@ -7,12 +7,12 @@ using this format [<Tweet ID>] <Tweet text> by <Tweet owner name>
 
 import requests
 import base64
-import sys
+from sys import argv
 
 if __name__ == "__main__":
-    client_key = "123"
-    client_secret = "123"
-    search_str = "123"
+    client_key = argv[1]
+    client_secret = argv[2]
+    search_str = argv[3]
 
     key_secret = '{}:{}'.format(client_key, client_secret).encode('ascii')
 
@@ -48,8 +48,7 @@ if __name__ == "__main__":
     search_resp = requests.get(search_url, headers=search_headers,
                                params=search_params)
 
-    resp_content = eval(search_resp.content)
-    data = resp_content['statuses']
+    data = search_resp.json().get('statuses')
     for obj in data:
         print("[{}] {} by {}".format(obj.get('id'),
                                      obj.get('text'),
