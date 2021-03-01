@@ -38,7 +38,6 @@ if __name__ == "__main__":
 
     search_params = {
         'q': search_str,
-        'result_type': 'recent',
         'count': 5
     }
 
@@ -47,7 +46,9 @@ if __name__ == "__main__":
                                params=search_params)
 
     data = search_resp.json().get('statuses')
-    for obj in data:
-        print("[{}] {} by {}".format(obj.get('id'),
-                                     obj.get('text'),
-                                     obj.get('user').get('name')))
+
+    if data:
+        for obj in data:
+            print("[{}] {} by {}".format(obj.get('id'),
+                                         obj.get('text'),
+                                         obj.get('user').get('name')))
