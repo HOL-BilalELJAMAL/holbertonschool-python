@@ -30,8 +30,6 @@ if __name__ == "__main__":
     }
     auth_resp = requests.post(auth_url, headers=auth_headers, data=auth_data)
 
-    print(auth_resp.status_code)
-
     access_token = auth_resp.json()['access_token']
 
     search_headers = {
