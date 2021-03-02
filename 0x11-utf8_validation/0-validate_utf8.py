@@ -14,43 +14,17 @@ def validUTF8(data):
     Args:
         data (list): List of integers
     """
-    index = 0
-    while index < len(data):
-        number = data[index] & (2 ** 7)
-        number >>= 7
-        if number == 0:
-            index += 1
+    byte_num = 0
+    for i, n in enumerate(data):
+        byte = n & 0xFF
+        if byte_num:
+            if byte >> 6 != 2:
+                return False
+            byte_num -= 1
             continue
-
-        number_of_ones = 0
-        while True:
-            number = data[index] & (2 ** (7 - number_of_ones))
-            number >>= (7 - number_of_ones)
-            if number == 1:
-                number_of_ones += 1
-            else:
-                break
-
-            if number_of_ones > 4:
-                return False
-
-        if number_of_ones == 1:
+        while (1 << abs(7 - byte_num)) & byte:
+            byte_num += 1
+        if byte_num == 1 or byte_num > 4:
             return False
-
-        index += 1
-
-        if index >= len(data) or index >= (index + number_of_ones - 1):
-            return False
-
-        for i in range(index, index + number_of_ones - 1):
-            number = data[i]
-
-            number >>= 7
-            if number != 1:
-                return False
-            number >>= 7
-            if number != 0:
-                return False
-
-            index += 1
-    return True
+        byte_num = max(byte_num - 1, 0)
+    return byte_num == 0
