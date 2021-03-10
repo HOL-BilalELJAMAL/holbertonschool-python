@@ -1,6 +1,5 @@
 -- Script that creates a stored procedure ComputeOverallScoreForUser that computes and store the overall score for a student
 DELIMITER |
-DROP PROCEDURE IF EXISTS ComputeOverallScoreForUser;
 CREATE PROCEDURE IF EXISTS ComputeOverallScoreForUser (IN user_id int);
 BEGIN
 UPDATE users AS u set u.overall_score = (
