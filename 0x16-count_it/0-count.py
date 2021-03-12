@@ -19,9 +19,9 @@ def count_words(subreddit, word_list, res=defaultdict(int), after=None):
         res (dict): Pairs of words - counts
         after (str): Parameter for the next page of the API result
     """
-    agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
-            "AppleWebKit/537.36 (KHTML, like Gecko) " \
-            "Chrome/89.0.4389.82 Safari/537.36"
+    agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6)\
+            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132i\
+            Safari/537.36"
     headers = {"User-Agent": agent}
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     if after:
