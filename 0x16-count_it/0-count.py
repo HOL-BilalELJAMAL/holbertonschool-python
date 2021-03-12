@@ -5,6 +5,7 @@ Module that defines a recursive function that queries the Reddit API
 """
 
 from collections import Counter, defaultdict
+import re
 import requests
 
 
