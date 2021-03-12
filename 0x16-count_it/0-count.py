@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-count words
+0-count.py
+Module that defines a recursive function that queries the Reddit API
 """
 
 from collections import Counter, defaultdict
@@ -9,7 +10,16 @@ import requests
 
 
 def count_words(subreddit, word_list, res=defaultdict(int), after=None):
-    """count words in a subreddit"""
+    """
+    Recursive function that queries the Reddit API, parses the title of all
+    hot articles, and prints a sorted count of given keywords
+
+    Args:
+        subreddit (str): Subreddit to search
+        word_list (list): List of words to search
+        res (dict): Pairs of words - counts
+        after (str): Parameter for the next page of the API result
+    """
     agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6)\
             AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132i\
             Safari/537.36"
