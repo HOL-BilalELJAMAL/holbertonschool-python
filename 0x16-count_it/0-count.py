@@ -4,12 +4,10 @@
 Module that defines a recursive function that queries the Reddit API
 """
 
-from collections import Counter, defaultdict
-import re
 import requests
 
 
-def count_words(subreddit, word_list, res=defaultdict(int), after=None):
+def count_words(subreddit, word_list, dic={}, after=None):
     """
     Recursive function that queries the Reddit API, parses the title of all
     hot articles, and prints a sorted count of given keywords
@@ -17,29 +15,29 @@ def count_words(subreddit, word_list, res=defaultdict(int), after=None):
     Args:
         subreddit (str): Subreddit to search
         word_list (list): List of words to search
-        res (dict): Pairs of words - counts
+        dic (dict): Pairs of words - counts
         after (str): Parameter for the next page of the API result
     """
-    agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6)\
-            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132i\
-            Safari/537.36"
-    headers = {"User-Agent": agent}
-    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
-    if after:
-        url += '?after={}'.format(after)
+    if len(dic) == 0:
+        for word in word_list:
+            dic[word] = 0
     try:
-        r = requests.get(url, headers=headers, allow_redirects=False).json()
-        titles = r.get('data').get('children')
-        for t in titles:
-            c = Counter(t.get('data').get('title').lower().split(' '))
+        u = 'https://api.reddit.com/r/{}/hot'.format(subreddit)
+        h = {'User-Agent': 'test'}
+        p = {'limit': 100}
+        if after:
+            p['after'] = after
+        r = requests.get(u, headers=h, params=p, allow_redirects=False).json()
+        posts = r.get('data').get('children')
+        for x in posts:
             for word in word_list:
-                if word.lower() in c:
-                    res[word] += c.get(word.lower())
+                if word.lower() in x.get('data').get('title').lower().split():
+                    dic[word] += 1
         after = r.get('data').get('after')
         if after:
-            return count_words(subreddit, word_list, res, after)
-        first_sort = sorted(res.items(), key=lambda x: x[0])
-        for k, v in sorted(first_sort, key=lambda x: x[1], reverse=True):
-            print('{}: {}'.format(k, v))
+            return count_words(subreddit, word_list, dic, after)
+        for k, v in sorted(dic.items(), key=lambda x: x[1], reverse=True):
+            if v > 0:
+                print('{}: {}'.format(k, v))
     except:
         return
