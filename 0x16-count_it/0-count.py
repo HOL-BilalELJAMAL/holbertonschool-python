@@ -9,7 +9,7 @@ import re
 import requests
 
 
-def count_words(subreddit, word_list, dic=defaultdict(int), after=None):
+def count_words(subreddit, word_list, res=defaultdict(int), after=None):
     """
     Recursive function that queries the Reddit API, parses the title of all
     hot articles, and prints a sorted count of given keywords
@@ -17,7 +17,7 @@ def count_words(subreddit, word_list, dic=defaultdict(int), after=None):
     Args:
         subreddit (str): Subreddit to search
         word_list (list): List of words to search
-        dic (dict): Pairs of words - counts
+        res (dict): Pairs of words - counts
         after (str): Parameter for the next page of the API result
     """
     agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6)\
