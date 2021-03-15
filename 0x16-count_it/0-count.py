@@ -4,10 +4,12 @@
 Module that defines a recursive function that queries the Reddit API
 """
 
+from collections import Counter, defaultdict
+import re
 import requests
 
 
-def count_words(subreddit, word_list, dic={}, after=None):
+def count_words(subreddit, word_list, dic=defaultdict(int), after=None):
     """
     Recursive function that queries the Reddit API, parses the title of all
     hot articles, and prints a sorted count of given keywords
