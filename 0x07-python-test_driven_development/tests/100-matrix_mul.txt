@@ -1,0 +1,85 @@
+The ``matrix_mul`` module
+=========================
+
+Using ``matrix_mul``
+--------------------
+
+Import file
+>>> matrix_mul = __import__('100-matrix_mul').matrix_mul
+
+Test multiply 2 integers matrices
+>>> matrix_mul([[1, 2], [3, 4]], [[5, 6], [7, 8]])
+[[19, 22], [43, 50]]
+
+Test multiply 2 floats matrices
+>>> matrix_mul([[1.2, 2.2], [1.2, 2.2]], [[1.2, 2.2], [1.2, 2.2]])
+[[4.08, 7.48], [4.08, 7.48]]
+
+Test multiply 2 floats and integers matrices
+>>> matrix_mul([[1.2, 2], [1.2, 2]], [[1.2, 2], [1.2, 2]])
+[[3.84, 6.4], [3.84, 6.4]]
+
+Test wrong list type of first matrix
+>>> matrix_mul("Holberton", [[1, 2, 3], [4, 5, 6]])
+Traceback (most recent call last):
+TypeError: m_a must be a list
+
+Test wrong list type of second matrix
+>>> matrix_mul([[1, 2, 3], [4, 5, 6]], {})
+Traceback (most recent call last):
+TypeError: m_b must be a list
+
+Test wrong list of lists type of first matrix
+>>> matrix_mul([1, 2, 3], [[1, 2, 3], [4, 5, 6]])
+Traceback (most recent call last):
+TypeError: m_a must be a list of lists
+
+Test wrong list of lists type of second matrix
+>>> matrix_mul([[1.2, 2.2, 3.2], [4.2, 5.2, 6.2]], [1, 2, 3])
+Traceback (most recent call last):
+TypeError: m_b must be a list of lists
+
+Test first matrix as empty
+>>> matrix_mul([[]], [[1, 2, 3], [4, 5, 6]])
+Traceback (most recent call last):
+ValueError: m_a can't be empty
+
+Test second matrix as empty
+>>> matrix_mul([[1.2, 2.2, 3.2], [4.2, 5.2, 6.2]], [])
+Traceback (most recent call last):
+ValueError: m_b can't be empty
+
+Test multiply 2 matrices whose at least one element of first matrix is not integer or float
+>>> matrix_mul([[1, "Holberton"], [3, 4]], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+TypeError: m_a should contain only integers or floats
+
+Test multiply 2 matrices whose at least one element of second matrix is not integer or float
+>>> matrix_mul([[1, 2], [3, 4]], [[1, None], [3, True]])
+Traceback (most recent call last):
+TypeError: m_b should contain only integers or floats
+
+Test multiply 2 matrices whose rows of first matrix have not the same size
+>>> matrix_mul([[1, 3, 7.5], [3.5, 7]], [[1, 2], [3, 4]])
+Traceback (most recent call last):
+TypeError: each row of m_a must be of the same size
+
+Test multiply 2 matrices whose rows of second matrix have not the same size
+>>> matrix_mul([[1, 2], [3, 4]], [[1, 3, 7.5], [3.5, 7]])
+Traceback (most recent call last):
+TypeError: each row of m_b must be of the same size
+
+Test matrices that cannot be multiplied (not rectangle)
+>>> matrix_mul([[4.7, 3, 6], [1, 8, 3.2]], [[2, 7.1, 4], [1, 22, 3]])
+Traceback (most recent call last):
+ValueError: m_a and m_b can't be multiplied
+
+Test calling matrix_mul without passing second matrix as parameter
+>>> matrix_mul([[4.7, 3, 6], [1, 8, 3.2]])
+Traceback (most recent call last):
+TypeError: matrix_mul() missing 1 required positional argument: 'm_b'
+
+Test calling matrix_mul without paramters
+>>> matrix_mul()
+Traceback (most recent call last):
+TypeError: matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'

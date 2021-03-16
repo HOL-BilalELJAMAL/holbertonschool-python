@@ -1,0 +1,85 @@
+The ``base_geometry`` module
+============================
+
+Using ``base_geometry``
+-----------------------
+
+Import file
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+Test integer_validator for positive integer as value
+>>> bg = BaseGeometry()
+>>> bg.integer_validator("age", 12)
+
+Test integer validator for name as empty string
+>>> bg.integer_validator("", 12)
+
+Test integer_validator for value as string 1
+>>> bg.integer_validator("age", "Bill Gates")
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator for value as string 2
+>>> bg.integer_validator("age", "12")
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator for value as list
+>>> bg.integer_validator("age", [1, 2, 3, 4, 5])
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator for value as list of list
+>>> bg.integer_validator("age", [[1, 2, 3], [1, 2, 3]])
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator for value as boolean
+>>> bg.integer_validator("age", False)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator with value as tuple 1
+>>> bg.integer_validator("age", (1, 3))
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator with value as tuple 2
+>>> bg.integer_validator("age", (1,))
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator with value as dictionary
+>>> bg.integer_validator("age", {5, 6})
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator with value as None
+>>> bg.integer_validator("age", None)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+Test integer_validator for value as zero
+>>> bg.integer_validator("age", 0)
+Traceback (most recent call last):
+ValueError: age must be greater than 0
+
+Test integer_validator for negative integer
+>>> bg.integer_validator("age", -12)
+Traceback (most recent call last):
+ValueError: age must be greater than 0
+
+Test calling integer_validator without value parameter
+>>> bg.integer_validator("age")
+Traceback (most recent call last):
+TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+Test calling integer_validator without parameters
+>>> bg.integer_validator()
+Traceback (most recent call last):
+TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+Test calling the area function
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented

@@ -1,0 +1,36 @@
+The ``say_my_name`` module
+==========================
+
+Using ``say_my_name``
+---------------------
+
+Import file
+>>> say_my_name = __import__('3-say_my_name').say_my_name
+
+Test print full name
+>>> say_my_name("Bill", "Gates")
+My name is Bill Gates
+
+Test print only first name
+>>> say_my_name("Bill")
+My name is Bill 
+
+Test wrong type for first name
+>>> say_my_name(2, "Gates")
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+Test first_name as None
+>>> say_my_name(None)
+Traceback (most recent call last):
+TypeError: first_name must be a string
+
+Test wrong type for last_name
+>>> say_my_name("Bill", [1, 2, 3])
+Traceback (most recent call last):
+TypeError: last_name must be a string
+
+Test calling say_my_name without parameters
+>>> say_my_name()
+Traceback (most recent call last):
+TypeError: say_my_name() missing 1 required positional argument: 'first_name'

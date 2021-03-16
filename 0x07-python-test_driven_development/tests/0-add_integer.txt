@@ -1,0 +1,102 @@
+The ``add_integer`` module
+==========================
+
+Using ``add_integer``
+---------------------
+
+Import file
+>>> add_integer = __import__('0-add_integer').add_integer
+
+Test two integers
+>>> add_integer(1, 1)
+2
+
+Test two zero integers
+>>> add_integer(0, 0)
+0
+
+Test two floats
+>>> add_integer(4.29, 6.14)
+10
+
+Test one integer and one float
+>>> add_integer(1, 3.9)
+4
+
+Test one negative integer and one positive float
+>>> add_integer(-2, 3.5)
+1
+
+Test one positive integer and one negative float
+>>> add_integer(3, 3.5)
+6
+
+Test one negative float and one positive integer
+>>> add_integer(-3.5, 2)
+-1
+
+Test one positive float and one negative integer
+>>> add_integer(3.5, -2)
+1
+
+Test one positive float and one default
+>>> add_integer(2.5)
+100
+
+Test one negative float and one default
+>>> add_integer(-2.5)
+96
+
+Test one positive integer and one default
+>>> add_integer(2)
+100
+
+Test one negative integer and one default
+>>> add_integer(-3)
+95
+
+Test one positive float and one default
+>>> add_integer(2.5)
+100
+
+Test one negative float and one default
+>>> add_integer(-3.5)
+95
+
+Test one negative infinite number and default
+>>> add_integer(-10e-99999)
+98
+
+Test one negative infinite number and one integer
+>>> add_integer(-10e-99999, 100)
+100
+
+Test one string and one integer
+>>> add_integer("Holberton", 2)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+Test one none and one integer
+>>> add_integer(None, 3)
+Traceback (most recent call last):
+TypeError: a must be an integer
+
+Test one integer and one list
+>>> add_integer(2, [1, 2, 3, 4, 5])
+Traceback (most recent call last):
+TypeError: b must be an integer
+
+Test missing arguments
+>>> add_integer()
+Traceback (most recent call last):
+TypeError: add_integer() missing 1 required positional argument: 'a'
+
+Test one NaN and one default
+>>> add_integer(float("NaN"))
+Traceback (most recent call last):
+ValueError: cannot convert float NaN to integer
+
+Test one positive infinite number and one integer
+>>> add_integer(10e99999, 10)
+Traceback (most recent call last):
+OverflowError: cannot convert float infinity to integer
