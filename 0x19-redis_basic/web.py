@@ -1,30 +1,42 @@
 #!/usr/bin/env python3
-""" Redis with requests """
-import requests
+"""
+web.py
+Module used for expiring web cache and tracker
+"""
+
 from functools import wraps
-from typing import Callable
 import redis
+import requests
+from typing import Callable
 
 
 def count(method: Callable):
-    """ Count the call to requests """
+    """
+    Callable function for counting how many times a request
+    has been made
+    """
     r = redis.Redis()
 
     @wraps(method)
-    def wrapped(url):
-        """ function that will count """
+    def wrapper(url):
+        """Function wrapper of decorator"""
         r.incr(f"count:{url}")
         expiration_count = r.get(f"cached:{url}")
         if expiration_count:
             return expiration_count.decode('utf-8')
+
         html = method(url)
         r.setex(f"cached:{url}", 10, html)
         return html
 
-    return wrapped
+    return wrapper
 
 
 @count
 def get_page(url: str) -> str:
-    """ module to obtain the HTML """
-    return requests.get(url).text
+    """
+    Function that returns how many times a particular URL was
+    accessed in the key
+    """
+    response = requests.get(url)
+    return response.text
