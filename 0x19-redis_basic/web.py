@@ -30,7 +30,8 @@ def count(method: Callable):
             r.setex(f"cached:{url}", 10, html)
             return html
         except:
-            return ""
+            pass
+        return ""
 
     return wrapper
 
