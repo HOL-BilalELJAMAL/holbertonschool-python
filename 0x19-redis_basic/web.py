@@ -1,58 +1,25 @@
 #!/usr/bin/env python3
-"""
-web.py
-Module used for expiring web cache and tracker
-"""
-
-
+"""Implementing an expiring web cache and tracker"""
+from redis.client import Redis
 import requests
-from functools import wraps
-import redis
-from typing import Callable
 
 
-red = redis.Redis()
-red.flushdb()
-
-
-def my_cache(method: Callable) -> Callable:
-    """
-    Callable function for counting how many times a request
-    has been made
-    """
-    @wraps(method)
-    def wrap(*args, **kwargs):
-        """Function wrapper of decorator"""
-        url = args[0]
-        text = red.get(url)
-        if text is None:
-            text = method(*args, **kwargs)
-            if text is not None:
-                red.setex(url, 10, text)
-                red.incr("count:"+url)
-        else:
-            text = text
-            red.incr("count:"+url)
-        return text
-    return wrap
-
-
-@my_cache
-def get_url(url: str) -> bytes:
-    """
-    Function that returns how many times a particular URL was
-    access
-    """
-    try:
-        text = requests.get(url).content
-        return text
-    except Exception:
-        return None
+redis = Redis()
+count = 0
 
 
 def get_page(url: str) -> str:
     """
-    Function that returns how many times a particular URL was
-    access
+    uses the requests module to obtain
+    the HTML content of a particular URL and returns it.
     """
-    return get_url(url)
+    data = f"count:{url}"
+    redis.set(data, count)
+    res = requests.get(url)
+    redis.incr(data)
+    redis.setex(data, 10, redis.get(data))
+    return res.text
+
+
+if __name__ == "__main__":
+    get_page('http://slowwly.robertomurray.co.uk')
