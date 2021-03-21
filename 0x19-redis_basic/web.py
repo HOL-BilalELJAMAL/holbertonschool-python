@@ -1,35 +1,36 @@
 #!/usr/bin/env python3
-""" track how many times a particular URL was accessed in a key """
+'''
+Implementing an expiring web cache and tracker
+'''
+import redis
 import requests
-from redis.client import Redis
 from typing import Callable
 from functools import wraps
 
+red = redis.Redis()
 
-r = Redis()
 
-
-def count(name: Callable) -> Callable:
-    """ count """
-    n = str(name)
-    @wraps(n)
-    def wrapper(self, *args, **kwargs):
-        """ wrapper function """
-        r.incr(n)
-        r.setex(n, 10, r.get(n))
+def count(method: Callable) -> Callable:
+    '''
+    Count the number of times a URL is called
+    '''
+    @wraps(method)
+    def wrapper(*args, **kwds):
+        '''
+        Wrapper function
+        '''
+        red.incr('count:' + args[0])
+        page = red.get(args[0])
+        if not page:
+            page = method(*args, **kwds)
+            red.setex(args[0], 10, page)
+        return page
     return wrapper
 
 
+@count
 def get_page(url: str) -> str:
-    """ get page """
-    key = f"count:{url}"
-    @count
-    def request_page(key: str, url: str) -> str:
-        """ request_page """
-        return requests.get(url).text
-
-    return request_page(key, url)
-
-
-if __name__ == "__main__":
-    get_page('http://slowwly.robertomurray.co.uk')
+    '''
+    Return the HTML content of the URL
+    '''
+    return requests.get(url).text
