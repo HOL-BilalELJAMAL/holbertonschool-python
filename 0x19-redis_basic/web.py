@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-'''
-Implementing an expiring web cache and tracker
-'''
+"""
+web.py
+Module implementing an expiring web cache and tracker
+"""
+
 import redis
 import requests
 from typing import Callable
@@ -11,14 +13,13 @@ red = redis.Redis()
 
 
 def count(method: Callable) -> Callable:
-    '''
-    Count the number of times a URL is called
-    '''
+    """
+    Callable function that counts the number of times
+    a URL is called
+    """
     @wraps(method)
     def wrapper(*args, **kwds):
-        '''
-        Wrapper function
-        '''
+        """Function wrapper of decorator"""
         red.incr('count:' + args[0])
         page = red.get(args[0])
         if not page:
@@ -30,7 +31,7 @@ def count(method: Callable) -> Callable:
 
 @count
 def get_page(url: str) -> str:
-    '''
-    Return the HTML content of the URL
-    '''
+    """
+    Function that returns the HTML content of the URL
+    """
     return requests.get(url).text
