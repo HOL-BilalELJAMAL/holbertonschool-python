@@ -9,22 +9,21 @@ import redis
 import requests
 from typing import Callable
 
-r = redis.Redis()
 
-
-def count_requests(method: Callable) -> Callable:
+def count(method: Callable):
     """
     Callable function for counting how many times a request
     has been made
     """
+    r = redis.Redis()
 
     @wraps(method)
     def wrapper(url):
         """Function wrapper of decorator"""
         r.incr(f"count:{url}")
-        cached_html = r.get(f"cached:{url}")
-        if cached_html:
-            return cached_html.decode('utf-8')
+        expiration_count = r.get(f"cached:{url}")
+        if expiration_count:
+            return expiration_count.decode('utf-8')
 
         html = method(url)
         r.setex(f"cached:{url}", 10, html)
@@ -33,7 +32,7 @@ def count_requests(method: Callable) -> Callable:
     return wrapper
 
 
-@count_requests
+@count
 def get_page(url: str) -> str:
     """
     Function that returns how many times a particular URL was
