@@ -20,7 +20,6 @@ def count(method: Callable):
     @wraps(method)
     def wrapper(url):
         """Function wrapper of decorator"""
-        print(type(method(url)))
         try:
             r.incr(f"count:{url}")
             expiration_count = r.get(f"cached:{url}")
