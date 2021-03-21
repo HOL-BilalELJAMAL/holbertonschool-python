@@ -1,42 +1,49 @@
 #!/usr/bin/env python3
+"""[web]
+    obtain the HTML content of a
+    particular URL and returns it.
 """
-web.py
-Module used for expiring web cache and tracker
-"""
-
-from functools import wraps
-import redis
 import requests
+import redis
+from datetime import timedelta
 from typing import Callable
+from functools import wraps
 
 
-def count(method: Callable):
-    """
-    Callable function for counting how many times a request
-    has been made
+def web_count(method: Callable) -> Callable:
+    """[count number of calls]
+    Args:
+        method (Callable): [method]
+    Returns:
+        Callable: [method]
     """
     r = redis.Redis()
 
     @wraps(method)
-    def wrapper(url):
-        """Function wrapper of decorator"""
-        r.incr(f"count:{url}")
-        expiration_count = r.get(f"cached:{url}")
-        if expiration_count:
-            return expiration_count.decode('utf-8')
+    def wrapper(*args, **kwds):
+        """[wrapper of decorator]
+        Returns:
+            [type]: [description]
+        """
+        key = "count:" + args[0]
+        # print('Calling decorated function')
+        r.incr(key)
+        data = r.get(args[0])
+        if (data is not None):
+            return data.decode("utf8")
 
-        html = method(url)
-        r.setex(f"cached:{url}", 10, html)
-        return html
-
+        method_return = method(args[0])
+        r.set(args[0], method_return)
+        r.expire(args[0], timedelta(seconds=10))
+        return method_return
     return wrapper
 
 
-@count
+@web_count
 def get_page(url: str) -> str:
+    """[get page]
+    Args:
+        url (str): [url]
     """
-    Function that returns how many times a particular URL was
-    accessed in the key
-    """
-    response = requests.get(url)
-    return response.text
+    r = requests.get(url)
+    return r.text
