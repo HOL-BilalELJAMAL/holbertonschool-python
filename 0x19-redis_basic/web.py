@@ -4,32 +4,36 @@ web.py
 Module used for expiring web cache and tracker
 """
 
+from functools import wraps
 import redis
 import requests
 from typing import Callable
-from functools import wraps
 
-redis = redis.Redis()
+r = redis.Redis()
 
 
-def wrap_requests(fn: Callable) -> Callable:
-    """Callable function decorator wrapper"""
+def count_requests(method: Callable) -> Callable:
+    """
+    Callable function for counting how many times a request
+    has been made
+    """
 
-    @wraps(fn)
+    @wraps(method)
     def wrapper(url):
         """Function wrapper of decorator"""
-        redis.incr(f"count:{url}")
-        cached_response = redis.get(f"cached:{url}")
-        if cached_response:
-            return cached_response.decode('utf-8')
-        result = fn(url)
-        redis.setex(f"cached:{url}", 10, result)
-        return result
+        r.incr(f"count:{url}")
+        cached_html = r.get(f"cached:{url}")
+        if cached_html:
+            return cached_html.decode('utf-8')
+
+        html = method(url)
+        r.setex(f"cached:{url}", 10, html)
+        return html
 
     return wrapper
 
 
-@wrap_requests
+@count_requests
 def get_page(url: str) -> str:
     """
     Function that returns how many times a particular URL was
