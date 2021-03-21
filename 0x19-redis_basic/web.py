@@ -20,18 +20,14 @@ def count(method: Callable):
     @wraps(method)
     def wrapper(url):
         """Function wrapper of decorator"""
-        try:
-            r.incr(f"count:{url}")
-            expiration_count = r.get(f"cached:{url}")
-            if expiration_count:
-                return expiration_count.decode('utf-8')
+        r.incr(f"count:{url}")
+        expiration_count = r.get(f"cached:{url}")
+        if expiration_count:
+            return expiration_count.decode('utf-8')
 
-            html = method(url)
-            r.setex(f"cached:{url}", 10, html)
-            return html
-        except:
-            pass
-        return ""
+        html = method(url)
+        r.setex(f"cached:{url}", 10, html)
+        return html
 
     return wrapper
 
