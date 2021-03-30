@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-"""
-test_client.py
-Module that defines the unit test of the client module
-"""
-
+""" Parameterize, patch as decorators
+and Integration tests """
 
 import requests
 import unittest
@@ -17,7 +14,7 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """Test that json can be got"""
+    """ Test that json can be got """
 
     @parameterized.expand([
         ("google", {"google": True}),
@@ -25,14 +22,14 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, org, expected, get_patch):
-        """Test the org of the client"""
+        """ Test the org of the client """
         get_patch.return_value = expected
         x = GithubOrgClient(org)
         self.assertEqual(x.org, expected)
         get_patch.assert_called_once_with("https://api.github.com/orgs/"+org)
 
     def test_public_repos_url(self):
-        """test that _public_repos_url works"""
+        """ test that _public_repos_url works """
         expected = "www.yes.com"
         payload = {"repos_url": expected}
         to_mock = 'client.GithubOrgClient.org'
@@ -42,7 +39,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, get_json_mock):
-        """test the public repos"""
+        """ test the public repos """
         jeff = {"name": "Jeff", "license": {"key": "a"}}
         bobb = {"name": "Bobb", "license": {"key": "b"}}
         suee = {"name": "Suee"}
@@ -62,7 +59,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({'license': {'key': 'other_license'}}, 'my_license', False)
     ])
     def test_has_license(self, repo, license, expected):
-        """test the license checker"""
+        """ test the license checker """
         self.assertEqual(GithubOrgClient.has_license(repo, license), expected)
 
 
@@ -71,11 +68,11 @@ class TestGithubOrgClient(unittest.TestCase):
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test for github org client"""
+    """ Integration test for github org client """
 
     @classmethod
     def setUpClass(cls):
-        """prepare for testing"""
+        """ prepare for testing """
         org = TEST_PAYLOAD[0][0]
         repos = TEST_PAYLOAD[0][1]
         org_mock = Mock()
@@ -93,11 +90,11 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """unprepared for testing"""
+        """ unprepare for testing """
         cls.get_patcher.stop()
 
     def test_public_repos(self):
-        """public repos test"""
+        """ public repos test """
         y = GithubOrgClient("x")
         self.assertEqual(y.org, self.org_payload)
         self.assertEqual(y.repos_payload, self.repos_payload)
@@ -107,7 +104,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
                                    call(self.org_payload["repos_url"])])
 
     def test_public_repos_with_license(self):
-        """public repos test"""
+        """ public repos test """
         y = GithubOrgClient("x")
         self.assertEqual(y.org, self.org_payload)
         self.assertEqual(y.repos_payload, self.repos_payload)
