@@ -1,39 +1,44 @@
 #!/usr/bin/python3
-
 """
-Module for isWinner.
+0-prime_game.py
+Module that defines the winner of the prime game between 2 players
 """
 
 
 def isWinner(x, nums):
-    """ Prime numbers game. """
-    if x < 0 or nums[-1] < 1:
-        return None
-    Maria_score = 0
-    Ben_score = 0
-    prime = [False] * 100001
-    primes = []
-    for i in range(2, 100001):
-        if not prime[i]:
-            primes.append(i)
-            for j in range(i, 100001, i):
-                prime[j] = True
+    """
+    Function that determines the winner of the game
 
-    l = 0
-    for a0 in range(x):
-        n = nums[l]
-        # your code goes here
-        num = 0
-        for i in range(100001):
-            if i >= len(primes) or primes[i] > n:
-                break
-            num += 1
-        l += 1
-        if (['Maria', 'Ben'][(num % 2) ^ 1]) == "Maria":
-            Maria_score += 1
-        else:
-            Ben_score += 1
-    if Maria_score > Ben_score:
+    Args:
+        x (int): Number of rounds
+        nums (list): List of integers
+
+    Notes:
+        If the winner cannot be determined, return None
+        Otherwise, return the name of the player that won the most rounds
+    """
+    if not nums or x < 1:
+        return None
+    n = max(nums)
+    prime = [True for _ in range(max(n + 1, 2))]
+    for i in range(2, int(pow(n, 0.5)) + 1):
+        if not prime[i]:
+            continue
+        for j in range(i*i, n + 1, i):
+            prime[j] = False
+
+    prime[0] = prime[1] = False
+    c = 0
+    for i in range(len(prime)):
+        if prime[i]:
+            c += 1
+        prime[i] = c
+
+    player1 = 0
+    for n in nums:
+        player1 += prime[n] % 2 == 1
+    if player1 * 2 == len(nums):
+        return None
+    if player1 * 2 > len(nums):
         return "Maria"
-    else:
-        return "Ben"
+    return "Ben"
