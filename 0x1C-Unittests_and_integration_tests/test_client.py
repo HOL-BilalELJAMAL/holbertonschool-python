@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-test_client.py
-Parameterize, patch as decorators and Integration tests
-"""
+"""Parameterize, patch as decorators and Integration teststest_client.py"""
 
 import requests
 import unittest
