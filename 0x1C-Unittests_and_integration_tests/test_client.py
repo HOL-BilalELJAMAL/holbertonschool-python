@@ -111,4 +111,4 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(G.public_repos("NONEXISTENT"), [])
         self.assertEqual(G.public_repos("apache-2.0"), self.apache2_repos)
         self.get.assert_has_calls([call("https://api.github.com/orgs/x"),
-                                   call(self.org_payload["repos_url"])])s
+                                   call(self.org_payload["repos_url"])])
